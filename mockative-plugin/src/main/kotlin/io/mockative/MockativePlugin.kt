@@ -70,16 +70,6 @@ abstract class MockativePlugin : Plugin<Project> {
                 val stubsUnitByDefault = mockative.stubsUnitByDefault.get()
                 ksp.arg("io.mockative:mockative:stubsUnitByDefault", "$stubsUnitByDefault")
             }
-
-            // Modifying dependencies for Android targets at task action time is prohibited, so we use this deduction
-            // during configuration time to do a "best effort" of adding JVM dependencies for Android targets as needed.
-            if (project.isMockativeEnabled) {
-                project.addJVMDependencies("androidMain", "the Gradle property 'io.mockative.enabled=true'")
-            } else if (project.isRunningConnectedAndroidTests) {
-                project.addJVMDependencies("androidMain", "connected Android test tasks detected")
-            } else if (project.isRunningAndroidUnitTests) {
-                project.addJVMDependencies("androidMain", "Android unit test tasks detected")
-            }
         }
     }
 }

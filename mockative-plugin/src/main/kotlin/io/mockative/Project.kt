@@ -80,15 +80,3 @@ private val androidUnitTestRegex = Regex("test[A-Z][a-z][A-Za-z]*UnitTest")
 
 internal val Project.isRunningAndroidUnitTests: Boolean
     get() = gradle.startParameter.taskNames.any { androidUnitTestRegex.matches(it) }
-
-internal fun Project.addJVMDependencies(sourceSetName: String, reason: String? = null) {
-    val sourceSet = kotlinExtension.sourceSets.firstOrNull { it.name == sourceSetName } ?: return
-
-    info("Adding JVM runtime dependencies to source set '${sourceSet.name}'${reason?.let { " as a result of $it" } ?: ""}")
-
-    sourceSet.dependencies {
-        implementation(kotlin("reflect"))
-        implementation("org.objenesis:objenesis:3.3")
-        implementation("org.javassist:javassist:3.29.2-GA")
-    }
-}

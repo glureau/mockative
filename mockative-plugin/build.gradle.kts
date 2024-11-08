@@ -30,21 +30,6 @@ kotlin {
     jvmToolchain(11)
 }
 
-val copySourcesToResources by tasks.registering(Copy::class) {
-    from("$rootDir/mockative-test/src")
-    into("src/main/resources/src/")
-}
-
-tasks.named("processResources") {
-    dependsOn(copySourcesToResources)
-}
-
-tasks.whenObjectAdded {
-    if (name == "sourcesJar") {
-        dependsOn(copySourcesToResources)
-    }
-}
-
 gradlePlugin {
     website = "https://github.com/mockative/mockative"
     vcsUrl = "https://github.com/mockative/mockative.git"
